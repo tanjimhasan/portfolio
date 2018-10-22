@@ -1,15 +1,8 @@
 jQuery(document).ready(function($){
-	$("#fakeLoader").fakeLoader({
-        	timeToHide:4000,
-            bgColor:"#2ecc71",
-            spinner:"spinner1"
-        });
-		
 
+	var skillsDiv = jQuery('#skills-load');
 
-		var skillsDiv = jQuery('#skills-load');
-
-		jQuery(window).on('scroll', function() {
+	jQuery(window).on('scroll', function() {
 		  var winT = jQuery(window).scrollTop(),
 		    winH = jQuery(window).height(),
 		    skillsT = skillsDiv.offset().top;
@@ -21,32 +14,15 @@ jQuery(document).ready(function($){
 			});
 		  }
 		});
-
-	$(".portfolio-filter li").on('click', function(){
-		var filterData = $(this).attr("data-filter");
-		$(".portfolio-list").isotope({
-			filter: filterData,
-		});
-
-		$(".portfolio-filter li").removeClass('active');
-		$(this).addClass('active');
-	});
-
-	$(".portfolio-list").isotope({
-			itemSelector: '.single-portfolio-item',
-			layoutMode: 'fitRows',
-			fitRows: {
-				  gutter: 25
-				}
-		});
+	var mixer = mixitup('.portfolio-list');
 
 	//sticky menu active
-        $('.site-header').sticky({topSpacing: 0});
-        
-        //smooth scroll
+    $('.header-area').sticky({topSpacing: 0});
+
+    //smooth scroll
         $('li.smooth-menu a').bind('click',function(event){
             var $anchor = $(this);
-            var headerH = '62';
+            var headerH = '82';
             $('html,body').stop().animate({
                 scrollTop : $($anchor.attr('href')).offset().top - headerH+"px"
             },1280,'easeInOutExpo');
@@ -55,29 +31,45 @@ jQuery(document).ready(function($){
 
         $('a.smooth-menu').bind('click',function(event){
             var $anchor = $(this);
-            var headerH = '62';
+            var headerH = '82';
             $('html,body').stop().animate({
                 scrollTop : $($anchor.attr('href')).offset().top - headerH+"px"
             },1280,'easeInOutExpo');
             event.preventDefault();
         });
 
-        var typed = new Typed('#typed', {
-		  strings: ["Hi! I am Tanjim Hasan", "A Professional Web Developer."],
-		  typeSpeed: 100,
-		  backSpeed: 100,
-		  showCursor: false,
-		  loop:true,
-		  disableBackTyping: true,
+	/*---------------------
+		scroll to top
+		check windows position
+	------------------------*/
+	    $(window).scroll(function(){
+	        if ($(this).scrollTop() > 100) {
+	            $('.scrollToTop').fadeIn();
+	        } else {
+	            $('.scrollToTop').fadeOut();
+	        }
+	    });
+
+	   /*---------------------
+		Click event to scroll to top
+		------------------------*/
+
+	    $('.scrollToTop').click(function(){
+	        $('html, body').animate({scrollTop : 0},900);
+	        return false;
+	    });
+
+	    /*---------------------
+		Mobile Menu
+		------------------------*/
+
+		var mainMenuNav = $('.main-menu nav');
+		mainMenuNav.meanmenu({
+			meanScreenWidth: '767',
+			meanMenuContainer: '.mobile-menu',
+			meanMenuClose: '<span class="menu-close"></span>',
+			meanMenuOpen: '<span class="menu-bar"></span>',
+			meanRevealPosition: 'right',
+			meanMenuCloseSize: '0',
 		});
-
-		
-
-		$(window).on("load",function(){
-			$(".preloader-box").fadeOut(2000);
-		});
-
-
-        
-   
 });
